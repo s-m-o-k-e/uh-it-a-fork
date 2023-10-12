@@ -26,7 +26,7 @@ public class MainTeleOp extends CommandOpMode {
         driver = new GamepadEx(gamepad1);
         codriver = new GamepadEx(gamepad2);
 
-        drive = new DriveSubsystem(hardwareMap, "backRight", "backLight", "frontRight", "frontLeft");
+        drive = new DriveSubsystem(hardwareMap, "rightBack", "leftBack", "rightFront", "leftFront");
 
         driveCommand = new DefaultDrive(drive, driver::getLeftX, driver::getLeftY, driver::getRightX,
                 () -> driver.getButton(GamepadKeys.Button.LEFT_BUMPER),  () -> driver.getButton(GamepadKeys.Button.RIGHT_BUMPER));
