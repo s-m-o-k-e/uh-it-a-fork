@@ -10,4 +10,7 @@ public class TeleOpConfig {
 
     public static double CLAW_OPEN_DEGREES = 180;
     public static double CLAW_CLOSE_DEGREES = 0;
+
+    public static double TRACKWIDTH = 14;
+    public static double TICKS_TO_INCHES;
 }
