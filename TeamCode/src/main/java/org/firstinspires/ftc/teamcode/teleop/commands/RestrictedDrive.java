@@ -43,7 +43,7 @@ public class RestrictedDrive extends CommandBase {
     public void execute() {
         double strafe = strafeSpeed.getAsDouble();
         double forward = forwardSpeed.getAsDouble();
-        double turn = turnSpeed.getAsDouble();
+        double turn = 0;
         if (leftBumper.getAsBoolean() || rightBumper.getAsBoolean()) {
             strafe *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
             forward *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;

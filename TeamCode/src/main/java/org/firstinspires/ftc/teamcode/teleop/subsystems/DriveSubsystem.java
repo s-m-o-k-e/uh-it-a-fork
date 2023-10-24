@@ -8,17 +8,23 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class DriveSubsystem extends SubsystemBase {
 
     private final MecanumDrive drive;
+    private final MotorEx backRight;
+    private final MotorEx backLeft;
+    private final MotorEx frontRight;
+    private final MotorEx frontLeft;
+
 
     public DriveSubsystem(MotorEx backRight, MotorEx backLeft, MotorEx frontRight, MotorEx frontLeft) {
         drive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
     }
 
+
     public DriveSubsystem(HardwareMap hw, String backRight, String backLeft, String frontRight, String frontLeft) {
-        MotorEx bR = new MotorEx(hw, backRight);
-        MotorEx bL = new MotorEx(hw, backLeft);
-        MotorEx fR = new MotorEx(hw, frontRight);
-        MotorEx fL = new MotorEx(hw, frontLeft);
-        drive = new MecanumDrive(fL, fR, bL, bR);
+        this.backRight = new MotorEx(hw, backRight);
+        this.backLeft = new MotorEx(hw, backLeft);
+        this.frontRight = new MotorEx(hw, frontRight);
+        this.frontLeft = new MotorEx(hw, frontLeft);
+        drive = new MecanumDrive(this.frontLeft, this.frontRight, this.backLeft, this.backRight);
     }
 
     public void drive(double strafe, double forward, double turn) {
@@ -27,6 +33,10 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void drive(double strafe, double forward, double turn, double heading) {
         drive.driveFieldCentric(strafe, forward, turn, heading);
+    }
+
+    public double[] getMotorVelocities(){
+        return new double[]{backRight.encoder.getCorrectedVelocity(), backLeft.encoder.getCorrectedVelocity(), frontRight.encoder.getCorrectedVelocity(), frontLeft.encoder.getCorrectedVelocity()}
     }
 
 }
