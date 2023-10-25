@@ -15,6 +15,10 @@ public class DriveSubsystem extends SubsystemBase {
 
 
     public DriveSubsystem(MotorEx backRight, MotorEx backLeft, MotorEx frontRight, MotorEx frontLeft) {
+        this.backRight = backRight;
+        this.backLeft = backLeft;
+        this.frontRight = frontRight;
+        this.frontLeft = frontLeft;
         drive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
     }
 
@@ -36,7 +40,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public double[] getMotorVelocities(){
-        return new double[]{backRight.encoder.getCorrectedVelocity(), backLeft.encoder.getCorrectedVelocity(), frontRight.encoder.getCorrectedVelocity(), frontLeft.encoder.getCorrectedVelocity()}
+        return new double[]{backRight.encoder.getCorrectedVelocity(), backLeft.encoder.getCorrectedVelocity(), frontRight.encoder.getCorrectedVelocity(), frontLeft.encoder.getCorrectedVelocity()};
     }
 
 }

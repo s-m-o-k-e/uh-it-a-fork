@@ -12,5 +12,7 @@ public class TeleOpConfig {
     public static double CLAW_CLOSE_DEGREES = 0;
 
     public static double TRACKWIDTH = 14;
-    public static double TICKS_TO_INCHES;
+    public static double TICKS_TO_INCHES = 1;
+
+    public static double WHEEL_RADIUS = 1.889764; //in
 }

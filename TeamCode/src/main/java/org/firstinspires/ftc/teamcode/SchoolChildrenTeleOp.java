@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.ftc.OverflowEncoder;
 import com.acmerobotics.roadrunner.ftc.RawEncoder;
 import com.arcrobotics.ftclib.command.CommandOpMode;
@@ -9,10 +10,13 @@ import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.kinematics.DifferentialOdometry;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.teleop.commands.ClawCommand;
 import org.firstinspires.ftc.teamcode.teleop.commands.DefaultDrive;
 import org.firstinspires.ftc.teamcode.teleop.commands.RestrictedDrive;
@@ -29,25 +33,25 @@ public class SchoolChildrenTeleOp extends CommandOpMode {
     private ClawSubsystem claw;
     private ClawCommand clawCommand;
 
-    private OdometrySubsystem odometrySubsystem;
+    private IMU imu;
+
     private DifferentialOdometry odom;
     @Override
     public void initialize() {
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        Telemetry dashTelemetry = dashboard.getTelemetry();
+
         driver = new GamepadEx(gamepad1);
         codriver = new GamepadEx(gamepad2);
 
-        par = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "par")));
-        perp = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "perp")));
-
-        odom = new DifferentialOdometry(
-                () -> par.getPositionAndVelocity().position,
-                () -> perp.getPositionAndVelocity().position,
-                TeleOpConfig.TRACKWIDTH
-        );
+        imu = hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
+                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
+        imu.initialize(parameters);
 
         drive = new DriveSubsystem(hardwareMap, "rightBack", "leftBack", "rightFront", "leftFront");
-        odometrySubsystem = new OdometrySubsystem(odom);
-        driveCommand = new RestrictedDrive(drive, odometrySubsystem, driver::getLeftX, driver::getLeftY, driver::getRightX,
+        driveCommand = new RestrictedDrive(drive, imu, telemetry, this::getRuntime, driver::getLeftX, driver::getLeftY, driver::getRightX,
                 () -> driver.getButton(GamepadKeys.Button.LEFT_BUMPER),  () -> driver.getButton(GamepadKeys.Button.RIGHT_BUMPER), 10, 10);
 
         register(drive);
