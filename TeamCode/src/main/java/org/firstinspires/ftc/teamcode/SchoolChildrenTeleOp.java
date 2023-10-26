@@ -52,7 +52,7 @@ public class SchoolChildrenTeleOp extends CommandOpMode {
 
         drive = new DriveSubsystem(hardwareMap, "rightBack", "leftBack", "rightFront", "leftFront");
         driveCommand = new RestrictedDrive(drive, imu, telemetry, this::getRuntime, driver::getLeftX, driver::getLeftY, driver::getRightX,
-                () -> driver.getButton(GamepadKeys.Button.LEFT_BUMPER),  () -> driver.getButton(GamepadKeys.Button.RIGHT_BUMPER), 10, 10);
+                () -> driver.getButton(GamepadKeys.Button.LEFT_BUMPER),  () -> driver.getButton(GamepadKeys.Button.RIGHT_BUMPER));
 
         register(drive);
         drive.setDefaultCommand(driveCommand);

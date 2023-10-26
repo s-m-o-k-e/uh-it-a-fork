@@ -29,16 +29,13 @@ public class RestrictedDrive extends CommandBase {
 
     private final Telemetry telemtry;
 
-    private final double restrictedX;
-    private final double restrictedY;
-
     private double posX;
     private double posY;
 
     private double prevTime;
 
 
-    public RestrictedDrive(DriveSubsystem subsystem, IMU imu, Telemetry telemetry, DoubleSupplier runtime, DoubleSupplier strafe, DoubleSupplier forward, DoubleSupplier turn, BooleanSupplier left, BooleanSupplier right, double restrictedX1, double restrictedY1) {
+    public RestrictedDrive(DriveSubsystem subsystem, IMU imu, Telemetry telemetry, DoubleSupplier runtime, DoubleSupplier strafe, DoubleSupplier forward, DoubleSupplier turn, BooleanSupplier left, BooleanSupplier right) {
         drive = subsystem;
         this.imu = imu;
         this.runtime = runtime;
@@ -49,8 +46,6 @@ public class RestrictedDrive extends CommandBase {
         leftBumper = left;
         rightBumper = right;
         addRequirements(subsystem);
-        restrictedX = restrictedX1;
-        restrictedY = restrictedY1;
 
     }
 
@@ -85,7 +80,7 @@ public class RestrictedDrive extends CommandBase {
         telemtry.addData("x", posX);
         telemtry.addData("y", posY);
         telemtry.update();
-        if (Math.abs(posX) >= restrictedX || Math.abs(posY) >= restrictedY){
+        if (Math.abs(posX) >= TeleOpConfig.RESTRICTED_X || Math.abs(posY) >= TeleOpConfig.RESTRICTED_Y){
             drive.drive(strafe * 0.2,forward * 0.2,turn * 0.2);
         } else {
             drive.drive(strafe, forward, turn);

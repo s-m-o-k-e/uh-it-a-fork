@@ -15,4 +15,7 @@ public class TeleOpConfig {
     public static double TICKS_TO_INCHES = 1;
 
     public static double WHEEL_RADIUS = 1.889764; //in
+
+    public static int RESTRICTED_X = 12;
+    public static int RESTRICTED_Y = 12;
 }
