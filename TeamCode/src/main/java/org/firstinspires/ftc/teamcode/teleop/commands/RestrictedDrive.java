@@ -53,8 +53,8 @@ public class RestrictedDrive extends CommandBase {
         // thx: https://ftc-code.gitbook.io/tech-toolbox/this-domain-is-now-depreciated-and-is-no-longer-updated-1/mecanum-no-deadwheels
         // backRight, backLeft, frontRight, frontLeft
         double[] wheelVelocities = drive.getMotorVelocities();
-        double vX = Arrays.stream(wheelVelocities).sum() * 0.5;
-        double vY = (-wheelVelocities[3] + wheelVelocities[2] + wheelVelocities[1] - wheelVelocities[0]) * 0.5;
+        double vX = Arrays.stream(wheelVelocities).sum() * (TeleOpConfig.WHEEL_RADIUS/4.0);
+        double vY = (-wheelVelocities[3] + wheelVelocities[2] + wheelVelocities[1] - wheelVelocities[0]) * (TeleOpConfig.WHEEL_RADIUS/4.0);
 
         double turnAngle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
