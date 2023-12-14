@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DriveSubsystem extends SubsystemBase {
 
-    private final MecanumDrive drive;
+    private final Me canumDrive drive;
     private final MotorEx backRight;
     private final MotorEx backLeft;
     private final MotorEx frontRight;
