@@ -10,23 +10,15 @@ public class SlideSubsystem extends SubsystemBase {
     public SlideSubsystem(HardwareMap hw, String frontMotor, String backMotor) {
         this.frontMotor = new MotorEx(hw, frontMotor);
         this.backMotor = new MotorEx(hw, backMotor);
-    }
-    public void raiseSlide() {
-//        frontMotor.setRunMode(MotorEx.RunMode.RawPower);
-//        backMotor.setRunMode(MotorEx.RunMode.RawPower);
-        frontMotor.set(.20);
-        backMotor.set(.20);
-    }
-    public void lowerSlide() {
-//        frontMotor.setRunMode(MotorEx.RunMode.RawPower);
-//        backMotor.setRunMode(MotorEx.RunMode.RawPower);
-        frontMotor.set(-.20);
-        backMotor.set(-.20);
+        this.frontMotor.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+        this.backMotor.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+        this.frontMotor.setRunMode(MotorEx.RunMode.RawPower);
+        this.backMotor.setRunMode(MotorEx.RunMode.RawPower);
     }
 
-    public void stopSlide() {
-        frontMotor.stopMotor();
-        backMotor.stopMotor();
+    public void slidePower(double velocity) {
+        frontMotor.set(velocity);
+        backMotor.set(-velocity);
     }
 
     public double[] getMotorVelocities(){
