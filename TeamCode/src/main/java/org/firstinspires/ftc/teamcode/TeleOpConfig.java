@@ -18,4 +18,6 @@ public class TeleOpConfig {
 
     public static int RESTRICTED_X = 12;
     public static int RESTRICTED_Y = 12;
+
+    public static double INTAKE_SPEED = 10;
 }
