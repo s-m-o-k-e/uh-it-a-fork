@@ -4,6 +4,10 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+/***
+* @author Jude Naramor
+ * @author Vikram K
+ * */
 public class SlideSubsystem extends SubsystemBase {
     private final MotorEx frontMotor;
     private final MotorEx backMotor;
@@ -22,6 +26,10 @@ public class SlideSubsystem extends SubsystemBase {
     }
 
     public double[] getMotorVelocities(){
-        return new double[]{frontMotor.encoder.getCorrectedVelocity(), backMotor.encoder.getCorrectedVelocity(),frontMotor.encoder.getPosition(),backMotor.encoder.getPosition()};
+        return new double[]{frontMotor.encoder.getCorrectedVelocity(), backMotor.encoder.getCorrectedVelocity()};
+    }
+
+    public double[] getMotorPosition(){
+        return new double[]{frontMotor.encoder.getPosition(), backMotor.encoder.getPosition()};
     }
 }
