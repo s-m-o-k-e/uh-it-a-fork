@@ -9,7 +9,7 @@ public class SlideCommand extends CommandBase {
     private Positions pos;
     private PIDFController pidfController;
     private int setPoint;
-    enum Positions {
+    public enum Positions {
         BOTTOM,
         MIDDLE,
         TOP
