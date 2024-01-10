@@ -14,7 +14,7 @@ import java.util.Vector;
 
 
 // Path for center radomization
-public class Blue_1_1 {
+public class Blue_2_1 {
     public enum Randomizations {
         LEFT,
         CENTER,
@@ -23,16 +23,14 @@ public class Blue_1_1 {
 
     public enum Routes  {
         OUTSIDE,
-        INSIDE
+        INSIDE,
     }
 
-    public int oneIfBlue = -1;
 
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        // Set these enum values to determine the path details!
-        Randomizations randomizationValue = Randomizations.LEFT;
+        Randomizations randomizationValue = Randomizations.RIGHT;
         Routes routeValue = Routes.INSIDE;
 
         Pose2d beforeTapeLinePose;
@@ -44,24 +42,25 @@ public class Blue_1_1 {
 
         switch (randomizationValue) {
             case LEFT:
-                beforeTapeLinePose = new Pose2d(-37, 37, Math.toRadians(135));
-                tapeLinePose =  new Pose2d(-34.5, 32, Math.toRadians(180));
+                beforeTapeLinePose = new Pose2d(10, 37, Math.toRadians(135));
+                tapeLinePose =  new Pose2d(11.5, 32, Math.toRadians(180));
                 scoringPose = new Pose2d(45, 41.3, Math.toRadians(0));
                 break;
+
             case CENTER:
-                tapeLinePose = new Pose2d(-38, 34, Math.toRadians(90));
-                beforeTapeLinePose = new Pose2d(-36.5, 49.5, Math.toRadians(180));
+                tapeLinePose = new Pose2d(9, 34, Math.toRadians(90));
+                beforeTapeLinePose = new Pose2d(11.5, 49.5, Math.toRadians(180));
                 scoringPose = new Pose2d(45, 35.5, Math.toRadians(0));
                 break;
             case RIGHT:
-                beforeTapeLinePose = new Pose2d(-35.5, 35.5, Math.toRadians(45));
-                tapeLinePose = new Pose2d(-36, 29.5, Math.toRadians(0));
+                beforeTapeLinePose = new Pose2d(14.5, 35.5, Math.toRadians(45));
+                tapeLinePose = new Pose2d(11, 29.5, Math.toRadians(0));
                 scoringPose = new Pose2d(45, 29.5, Math.toRadians(0));
                 break;
             default:
-                beforeTapeLinePose = new Pose2d(-35.5, 35.5, Math.toRadians(45));
-                tapeLinePose = new Pose2d(-36, 29.5, Math.toRadians(0));
-                scoringPose = new Pose2d(45, 29.5, Math.toRadians(0));
+                tapeLinePose = new Pose2d(10, 38, Math.toRadians(180));
+                beforeTapeLinePose = new Pose2d(11.5, 32, Math.toRadians(180));
+                scoringPose = new Pose2d(45, 41.3, Math.toRadians(0));
                 break;
         }
 
@@ -73,7 +72,7 @@ public class Blue_1_1 {
             corner = new Vector2d(45, 35);
         }
 
-        Pose2d startingPose = new Pose2d(-35, 63, Math.toRadians(270));
+        Pose2d startingPose = new Pose2d(12, 63, Math.toRadians(90));
         Pose2d finalBeforeTapeLinePose = beforeTapeLinePose;
         Pose2d finalTapeLinePose = tapeLinePose;
         Pose2d finalScoringPose = scoringPose;
