@@ -6,22 +6,17 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-/**
- * @author Anna Lynch
- */
 
-
-// Path for center radomization
-public class Blue_1_1 {
+//class for left randomization
+public class Blue_1_3 {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
         Pose2d centerScoringPose = new Pose2d(45, -35.3, Math.toRadians(0));
 
-        //rotations for each randomization
-        Pose2d middleRandomization = new Pose2d(-35, -35, Math.toRadians(90));
-        Pose2d rightRandomization = new Pose2d(-35, -34, Math.toRadians(180));
-        Pose2d leftRandomization = new Pose2d(-35, -35, Math.toRadians(0));
+        Pose2d middleRandomization = new Pose2d(-35, -34, Math.toRadians(90));
+        Pose2d rightRandomization = new Pose2d(-35, -35, Math.toRadians(0));
+        Pose2d leftRandomization = new Pose2d(-35, -35, Math.toRadians(180));
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
@@ -30,7 +25,7 @@ public class Blue_1_1 {
                         drive.trajectorySequenceBuilder(new Pose2d(-35.00, -63.00, Math.toRadians(90)))
                                 // Run vision
                                 .lineToLinearHeading(middleRandomization)
-                                //.splineToLinearHeading(leftRandomization, Math.toRadians(90))
+                                .lineToLinearHeading(leftRandomization)
                                 .lineToConstantHeading(new Vector2d(-35, -60))
                                 .lineToConstantHeading(new Vector2d(50, -60))
                                 .build()
