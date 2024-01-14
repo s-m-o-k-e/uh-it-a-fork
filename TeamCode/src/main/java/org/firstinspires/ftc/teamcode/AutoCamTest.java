@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.vision.ColorProcessor;
 import org.firstinspires.ftc.vision.VisionPortal;
-
+@Autonomous
 public class AutoCamTest extends OpMode {
     ColorProcessor processor;
     VisionPortal portal;
