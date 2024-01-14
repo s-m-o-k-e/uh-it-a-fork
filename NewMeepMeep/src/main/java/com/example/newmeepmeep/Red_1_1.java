@@ -6,93 +6,27 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-import java.util.Vector;
-
-/**
- * @author Anna Lynch
- */
-
-
-// Path for center radomization
 public class Red_1_1 {
-    public enum Randomizations {
-        LEFT,
-        CENTER,
-        RIGHT;
-    }
-
-    public enum Routes  {
-        OUTSIDE,
-        INSIDE,
-    }
-
-
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        Randomizations randomizationValue = Randomizations.RIGHT;
-        Routes routeValue = Routes.OUTSIDE;
+        Pose2d centerScoringPose = new Pose2d(45, -35.3, Math.toRadians(0));
 
-        Pose2d beforeTapeLinePose;
-        Pose2d tapeLinePose;
-        Pose2d scoringPose;
-
-        Vector2d waystation;
-        Vector2d corner;
-
-        switch (randomizationValue) {
-            case LEFT:
-                beforeTapeLinePose = new Pose2d(-35.5, -35.5, Math.toRadians(45));
-                tapeLinePose = new Pose2d(-36, -29.5, Math.toRadians(0));
-                scoringPose = new Pose2d(45, -29.5, Math.toRadians(0));
-                break;
-            case CENTER:
-                tapeLinePose = new Pose2d(-38, -34, Math.toRadians(270));
-                beforeTapeLinePose = new Pose2d(-36.5, -49.5, Math.toRadians(180));
-                scoringPose = new Pose2d(45, -35.5, Math.toRadians(0));
-                break;
-            case RIGHT:
-                beforeTapeLinePose = new Pose2d(-37, -37, Math.toRadians(135));
-                tapeLinePose =  new Pose2d(-34.5, -32, Math.toRadians(180));
-                scoringPose = new Pose2d(45, -41.3, Math.toRadians(0));
-                break;
-            default:
-                tapeLinePose = new Pose2d(-38, -38, Math.toRadians(180));
-                beforeTapeLinePose = new Pose2d(0, 0, 0);
-                scoringPose = new Pose2d(45, -41.3, Math.toRadians(0));
-                break;
-        }
-
-        if (routeValue == Routes.OUTSIDE) {
-            waystation = new Vector2d(tapeLinePose.getX(), -57.0);
-             corner = new Vector2d(45.0, -57.0);
-        } else {
-            waystation = new Vector2d(tapeLinePose.getX(), -35);
-            corner = new Vector2d(45, -35);
-        }
-
-        Pose2d startingPose = new Pose2d(-35, -63, Math.toRadians(90));
-        Pose2d finalBeforeTapeLinePose = beforeTapeLinePose;
-        Pose2d finalTapeLinePose = tapeLinePose;
-        Pose2d finalScoringPose = scoringPose;
-
-        Vector2d finalWaystation = waystation;
-        Vector2d finalCorner = corner;
+        //rotations for each randomization
+        Pose2d middleRandomization = new Pose2d(-35, 34, Math.toRadians(270));
+        Pose2d rightRandomization = new Pose2d(-35, 35, Math.toRadians(0));
+        Pose2d leftRandomization = new Pose2d(-35, 35, Math.toRadians(180));
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 18)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(startingPose)
+                        drive.trajectorySequenceBuilder(new Pose2d(-35.00, 63.00, Math.toRadians(270)))
                                 // Run vision
-                                .lineToLinearHeading(finalBeforeTapeLinePose)
-                                .lineToLinearHeading(finalTapeLinePose)
-                                // Vomit pixel
-                                .lineToConstantHeading(finalWaystation)
-                                .lineToConstantHeading(finalCorner)
-                                .lineToLinearHeading(finalScoringPose)
-                                // Extend claw in hopes of scoring
-                                // Extend by running in loop between scoring location and pixel stack
+                                .lineToLinearHeading(middleRandomization)
+                                //.splineToLinearHeading(leftRandomization, Math.toRadians(90))
+                                .lineToConstantHeading(new Vector2d(-35, 60))
+                                .lineToConstantHeading(new Vector2d(50, 60))
                                 .build()
                 );
 
