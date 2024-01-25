@@ -5,14 +5,17 @@ import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.teleop.commands.ClawCommand;
 import org.firstinspires.ftc.teamcode.teleop.commands.DefaultDrive;
+import org.firstinspires.ftc.teamcode.teleop.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.teleop.commands.SlideCommand;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.ClawSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.SlideSubsystem;
 
 @TeleOp(name="Just Drive TeleOp", group = "Apex Robotics 3916")
@@ -21,6 +24,12 @@ public class JustDrive extends CommandOpMode {
     private GamepadEx driver, codriver;
     private DriveSubsystem drive;
     private DefaultDrive driveCommand;
+
+    private IntakeSubsystem intake;
+
+    private IntakeCommand incommand;
+    private IntakeCommand outcommand;
+    private IntakeCommand nomove;
     @Override
     public void initialize() {
         driver = new GamepadEx(gamepad1);
@@ -34,5 +43,15 @@ public class JustDrive extends CommandOpMode {
         register(drive);
         drive.setDefaultCommand(driveCommand);
 
+        intake = new IntakeSubsystem(new MotorEx(hardwareMap, "inmotor"));
+
+        incommand = new IntakeCommand(intake, 1);
+        outcommand = new IntakeCommand(intake, -1);
+        nomove = new IntakeCommand(intake, 0);
+
+        new GamepadButton(driver, GamepadKeys.Button.A).whenPressed(incommand, true);
+        new GamepadButton(driver, GamepadKeys.Button.B).whenPressed(outcommand, true);
+        new GamepadButton(driver, GamepadKeys.Button.X).whenPressed(nomove, true);
+        intake.setDefaultCommand(nomove);
     }
 }
