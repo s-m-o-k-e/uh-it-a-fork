@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.teleop.commands.ClawCommand;
 import org.firstinspires.ftc.teamcode.teleop.commands.DefaultDrive;
 import org.firstinspires.ftc.teamcode.teleop.commands.IntakeCommand;
+import org.firstinspires.ftc.teamcode.teleop.commands.SimpleSlide;
 import org.firstinspires.ftc.teamcode.teleop.commands.SlideCommand;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.ClawSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.DriveSubsystem;
@@ -30,6 +31,11 @@ public class JustDrive extends CommandOpMode {
     private IntakeCommand incommand;
     private IntakeCommand outcommand;
     private IntakeCommand nomove;
+
+    private SlideSubsystem slide;
+    private SimpleSlide up;
+    private SimpleSlide down;
+    private SimpleSlide stop;
     @Override
     public void initialize() {
         driver = new GamepadEx(gamepad1);
@@ -53,5 +59,16 @@ public class JustDrive extends CommandOpMode {
         new GamepadButton(driver, GamepadKeys.Button.B).whenPressed(outcommand, true);
         new GamepadButton(driver, GamepadKeys.Button.X).whenPressed(nomove, true);
         intake.setDefaultCommand(nomove);
+
+        slide = new SlideSubsystem(hardwareMap, "left", "right");
+
+        up = new SimpleSlide(slide, 0.5);
+        down = new SimpleSlide(slide, -0.5);
+        stop = new SimpleSlide(slide, 0);
+
+        new GamepadButton(driver, GamepadKeys.Button.DPAD_DOWN).whenPressed(down, true);
+        new GamepadButton(driver, GamepadKeys.Button.DPAD_UP).whenPressed(up, true);
+        new GamepadButton(driver, GamepadKeys.Button.DPAD_RIGHT).whenPressed(stop, true);
+        slide.setDefaultCommand(stop);
     }
 }
