@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
+import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
@@ -28,9 +29,7 @@ public class JustDrive extends CommandOpMode {
 
     private IntakeSubsystem intake;
 
-    private IntakeCommand incommand;
-    private IntakeCommand outcommand;
-    private IntakeCommand nomove;
+    private IntakeCommand intakecommand;
 
     private SlideSubsystem slide;
     private SimpleSlide up;
@@ -51,20 +50,17 @@ public class JustDrive extends CommandOpMode {
 
         intake = new IntakeSubsystem(new MotorEx(hardwareMap, "inmotor"));
 
-        incommand = new IntakeCommand(intake, 1);
-        outcommand = new IntakeCommand(intake, -1);
-        nomove = new IntakeCommand(intake, 0);
+        intakecommand = new IntakeCommand(intake, () -> driver.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - driver.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
+        register(intake);
 
-        new GamepadButton(driver, GamepadKeys.Button.A).whenPressed(incommand, true);
-        new GamepadButton(driver, GamepadKeys.Button.B).whenPressed(outcommand, true);
-        new GamepadButton(driver, GamepadKeys.Button.X).whenPressed(nomove, true);
-        intake.setDefaultCommand(nomove);
+        intake.setDefaultCommand(intakecommand);
 
         slide = new SlideSubsystem(hardwareMap, "left", "right");
 
         up = new SimpleSlide(slide, 0.5);
         down = new SimpleSlide(slide, -0.5);
         stop = new SimpleSlide(slide, 0);
+        register(slide);
 
         new GamepadButton(driver, GamepadKeys.Button.DPAD_DOWN).whenPressed(down, true);
         new GamepadButton(driver, GamepadKeys.Button.DPAD_UP).whenPressed(up, true);
