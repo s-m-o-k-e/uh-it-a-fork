@@ -13,11 +13,13 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.teleop.commands.ClawCommand;
 import org.firstinspires.ftc.teamcode.teleop.commands.DefaultDrive;
 import org.firstinspires.ftc.teamcode.teleop.commands.IntakeCommand;
+import org.firstinspires.ftc.teamcode.teleop.commands.LauncherCommand;
 import org.firstinspires.ftc.teamcode.teleop.commands.SimpleSlide;
 import org.firstinspires.ftc.teamcode.teleop.commands.SlideCommand;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.ClawSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.LauncherSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.SlideSubsystem;
 
 @TeleOp(name="Just Drive TeleOp", group = "Apex Robotics 3916")
@@ -57,14 +59,23 @@ public class JustDrive extends CommandOpMode {
 
         slide = new SlideSubsystem(hardwareMap, "left", "right");
 
-        up = new SimpleSlide(slide, 0.5);
-        down = new SimpleSlide(slide, -0.5);
-        stop = new SimpleSlide(slide, 0);
+        up = new SimpleSlide(slide, () -> codriver.getLeftY() * -0.5);
+
+
         register(slide);
 
-        new GamepadButton(driver, GamepadKeys.Button.DPAD_DOWN).whenPressed(down, true);
-        new GamepadButton(driver, GamepadKeys.Button.DPAD_UP).whenPressed(up, true);
-        new GamepadButton(driver, GamepadKeys.Button.DPAD_RIGHT).whenPressed(stop, true);
-        slide.setDefaultCommand(stop);
+        slide.setDefaultCommand(up);
+
+        LauncherSubsystem launcher = new LauncherSubsystem(hardwareMap, "launcher", 0, 180);
+        LauncherCommand launcherCommand = new LauncherCommand(launcher);
+
+        new GamepadButton(codriver, GamepadKeys.Button.A).whenPressed(launcherCommand);
+        register(launcher);
+
+        ClawSubsystem claw = new ClawSubsystem(hardwareMap, "claw", 0, 180);
+        ClawCommand clawCommand = new ClawCommand(claw);
+        register(claw);
+
+        new GamepadButton(codriver, GamepadKeys.Button.B).whenPressed(clawCommand, false);
     }
 }

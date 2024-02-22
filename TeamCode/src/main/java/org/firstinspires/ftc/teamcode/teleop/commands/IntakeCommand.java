@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.teleop.commands;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
 
+import org.firstinspires.ftc.teamcode.TeleOpConfig;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.SlideSubsystem;
 
@@ -26,7 +27,7 @@ public class IntakeCommand extends CommandBase {
 
     @Override
     public void execute() {
-        intakeSubsystem.move(power.getAsDouble());
+        intakeSubsystem.move(power.getAsDouble() * TeleOpConfig.INTAKE_SPEED);
     }
 
 

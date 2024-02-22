@@ -6,11 +6,13 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.SlideSubsystem;
 
+import java.util.function.DoubleSupplier;
+
 public class SimpleSlide extends CommandBase {
     private SlideSubsystem slideSubsystem;
-    private double power;
+    private DoubleSupplier power;
 
-    public SimpleSlide (SlideSubsystem slideSubsystem, double power) {
+    public SimpleSlide (SlideSubsystem slideSubsystem, DoubleSupplier power) {
         this.slideSubsystem = slideSubsystem;
         this.power =power;
         addRequirements(slideSubsystem);
@@ -23,7 +25,7 @@ public class SimpleSlide extends CommandBase {
 
     @Override
     public void execute() {
-        slideSubsystem.slidePower(power);
+        slideSubsystem.slidePower(power.getAsDouble());
     }
 
 
