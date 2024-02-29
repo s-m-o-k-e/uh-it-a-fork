@@ -38,7 +38,7 @@ public class DefaultDrive extends CommandBase {
             forward *= TeleOpConfig.PRECISION_POWER_MULTIPLIER;
             turn *= TeleOpConfig.PRECISION_TURN_MULTIPLIER;
         }
-        drive.drive(strafe, forward, turn);
+        drive.drive(strafe, forward, -turn);
     }
 
 }

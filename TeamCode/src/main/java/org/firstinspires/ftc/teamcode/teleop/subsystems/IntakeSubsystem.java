@@ -34,4 +34,10 @@ public class IntakeSubsystem extends SubsystemBase {
     public void reverseIntake() {
         intakeMotor.setVelocity(-INTAKE_SPEED); //I feel like being able to move backwards is useful for getting things unstuck
     }
+
+
+
+    public void move(double power) {
+        intakeMotor.set(power);
+    }
 }
