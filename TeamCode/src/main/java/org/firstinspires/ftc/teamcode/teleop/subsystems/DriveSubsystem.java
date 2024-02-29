@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.teleop.subsystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -28,6 +29,9 @@ public class DriveSubsystem extends SubsystemBase {
         this.backLeft = new MotorEx(hw, backLeft);
         this.frontRight = new MotorEx(hw, frontRight);
         this.frontLeft = new MotorEx(hw, frontLeft);
+        this.backLeft.motor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.backRight.motor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.frontLeft.motor.setDirection(DcMotorSimple.Direction.REVERSE);
         drive = new MecanumDrive(this.frontLeft, this.frontRight, this.backLeft, this.backRight);
     }
 
