@@ -29,7 +29,12 @@ public class DriveSubsystem extends SubsystemBase {
         this.backLeft = new MotorEx(hw, backLeft);
         this.frontRight = new MotorEx(hw, frontRight);
         this.frontLeft = new MotorEx(hw, frontLeft);
-        
+
+        // this.backLeft.motor.setDirection(DcMotorSimple.Direction.REVERSE);
+        // this.backRight.motor.setDirection(DcMotorSimple.Direction.REVERSE);
+        // this.frontLeft.motor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.frontRight.motor.setDirection(DcMotorSimple.Direction.REVERSE);
+
         drive = new MecanumDrive(this.frontLeft, this.frontRight, this.backLeft, this.backRight);
     }
 
