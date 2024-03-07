@@ -81,7 +81,21 @@ public class RestrictedDrive extends CommandBase {
         telemtry.addData("y", posY);
         telemtry.update();
         if (Math.abs(posX) >= TeleOpConfig.RESTRICTED_X || Math.abs(posY) >= TeleOpConfig.RESTRICTED_Y){
-            drive.drive(strafe * 0.2,forward * 0.2,turn * 0.2);
+            double angleToCenter = Math.atan2(0 - posY, 0 - posX);
+            double distanceToCenter = Math.sqrt(posX * posX + posY * posY);
+
+            if (angleToCenter > Math.PI) {
+                angleToCenter -= 2 * Math.PI;
+            }
+            while (angleToCenter <= -Math.PI) {
+                angleToCenter += 2 * Math.PI;
+            }
+
+            double desiredSpeed = Math.min(0.2, distanceToCenter * 0.1);
+            double targetStrafe = Math.cos(angleToCenter) * desiredSpeed;
+            double targetForward = Math.sin(angleToCenter) * desiredSpeed;
+
+            drive.drive(targetStrafe, targetForward, turn);
         } else {
             drive.drive(strafe, forward, turn);
         }
