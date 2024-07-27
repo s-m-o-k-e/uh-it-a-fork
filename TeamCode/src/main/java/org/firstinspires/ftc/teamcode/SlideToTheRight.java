@@ -5,21 +5,21 @@ import org.firstinspires.ftc.teamcode.teleop.subsystems.DriveSubsystem;
 
 @Autonomous(group = "drive", name="Slide to the Right")
 public class SlideToTheRight extends OpMode {
-    public static double TIME = 2;
-    private double xDirection = .5;
-    private double forwardDirection = .1;
+    public static double TIME = 1;
+    private double xDirection = 1;//.5
+    private double forwardDirection = 0;
     private DriveSubsystem ds;
     @Override
     public void init() {
-        ds = new DriveSubsystem(hardwareMap, "rightBack", "leftBack", "rightFront", "leftFront");
+        ds = new DriveSubsystem(hardwareMap, "leftBack", "rightBack", "leftFront", "rightFront");
     }
 
     @Override
     public void loop() {
         ds.drive(xDirection, forwardDirection, 0);
-        if (getRuntime() > (TIME * 1000)) {
+        if (getRuntime() > (TIME)) {
             stop();
-        } else if (getRuntime() > 400) {
+        } else if (getRuntime() > 4) {
             forwardDirection = 0;
         }
     }

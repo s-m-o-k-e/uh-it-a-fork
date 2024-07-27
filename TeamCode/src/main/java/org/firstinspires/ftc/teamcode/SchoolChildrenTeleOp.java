@@ -57,12 +57,12 @@ public class SchoolChildrenTeleOp extends CommandOpMode {
         register(drive);
         drive.setDefaultCommand(driveCommand);
 
-        claw = new ClawSubsystem(hardwareMap, "clawServo", 0, 360);
+        //claw = new ClawSubsystem(hardwareMap, "clawServo", 0, 360);
 
-        clawCommand = new ClawCommand(claw);
+        //clawCommand = new ClawCommand(claw);
 
-        new GamepadButton(driver, GamepadKeys.Button.A).whenPressed(clawCommand);
+        //new GamepadButton(driver, GamepadKeys.Button.A).whenPressed(clawCommand);
 
-        schedule(clawCommand);
+        //schedule(clawCommand);
     }
 }

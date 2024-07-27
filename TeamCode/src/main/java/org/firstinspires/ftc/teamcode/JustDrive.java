@@ -41,41 +41,49 @@ public class JustDrive extends CommandOpMode {
     public void initialize() {
         driver = new GamepadEx(gamepad1);
         codriver = new GamepadEx(gamepad2);
+        //normal config
 
-        drive = new DriveSubsystem(hardwareMap, "rightBack", "leftBack", "rightFront", "leftFront");
-
+        drive = new DriveSubsystem(hardwareMap, "leftBack", "rightBack", "leftFront", "rightFront");
+        //switch right motors if it doesn't work
         driveCommand = new DefaultDrive(drive, driver::getLeftX, driver::getLeftY, driver::getRightX,
-                () -> driver.getButton(GamepadKeys.Button.LEFT_BUMPER),  () -> driver.getButton(GamepadKeys.Button.RIGHT_BUMPER));
+               () -> driver.getButton(GamepadKeys.Button.LEFT_BUMPER),  () -> driver.getButton(GamepadKeys.Button.RIGHT_BUMPER));
+        //driveCommand = new DefaultDrive(drive, driver::getRightX, driver::getLeftY, driver::getLeftX,
+          //      () -> driver.getButton(GamepadKeys.Button.LEFT_BUMPER),  () -> driver.getButton(GamepadKeys.Button.RIGHT_BUMPER));
 
         register(drive);
         drive.setDefaultCommand(driveCommand);
 
-        intake = new IntakeSubsystem(new MotorEx(hardwareMap, "inmotor"));
-
+        //intake = new IntakeSubsystem(new MotorEx(hardwareMap, "inmotor"));
+        intake = new IntakeSubsystem(hardwareMap, "inmotor", "right");
         intakecommand = new IntakeCommand(intake, () -> driver.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - driver.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
         register(intake);
-
         intake.setDefaultCommand(intakecommand);
 
-        slide = new SlideSubsystem(hardwareMap, "left", "right");
+        //slide = new SlideSubsystem(hardwareMap, "left", "right");
 
-        up = new SimpleSlide(slide, () -> codriver.getLeftY() * -0.5);
+        //up = new SimpleSlide(slide, () -> codriver.getLeftY() * -0.5);
 
 
-        register(slide);
+        //register(slide);
 
-        slide.setDefaultCommand(up);
+        //slide.setDefaultCommand(up);
 
         LauncherSubsystem launcher = new LauncherSubsystem(hardwareMap, "launcher", 0, 180);
         LauncherCommand launcherCommand = new LauncherCommand(launcher);
 
-        new GamepadButton(codriver, GamepadKeys.Button.A).whenPressed(launcherCommand);
+        new GamepadButton(driver, GamepadKeys.Button.A).whenPressed(launcherCommand);
         register(launcher);
 
-        ClawSubsystem claw = new ClawSubsystem(hardwareMap, "claw", 0, 180);
-        ClawCommand clawCommand = new ClawCommand(claw);
-        register(claw);
+        LauncherSubsystem launcher2 = new LauncherSubsystem(hardwareMap, "claw", 0, 180);
+        LauncherCommand launcherCommand2 = new LauncherCommand(launcher2);
 
-        new GamepadButton(codriver, GamepadKeys.Button.B).whenPressed(clawCommand, false);
+        new GamepadButton(driver, GamepadKeys.Button.B).whenPressed(launcherCommand2);
+        register(launcher2);
+
+        //ClawSubsystem claw = new ClawSubsystem(hardwareMap, "claw", 0, 180);
+        //ClawCommand clawCommand = new ClawCommand(claw);
+        //register(claw);
+
+        //new GamepadButton(driver, GamepadKeys.Button.B).whenPressed(clawCommand);
     }
 }

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.TeleOpConfig;
 
-public class LauncherSubsystem extends SubsystemBase {
+ public class LauncherSubsystem extends SubsystemBase {
     private SimpleServo servo;
 
     public LauncherSubsystem(HardwareMap hw, String servoName, double minDegree, double maxDegree) {

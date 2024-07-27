@@ -13,7 +13,7 @@ public class GoForwardBigly extends OpMode {
 
     @Override
     public void init() {
-        ds = new DriveSubsystem(hardwareMap, "rightBack", "leftBack", "rightFront", "leftFront");
+        ds = new DriveSubsystem(hardwareMap, "leftBack", "rightBack", "leftFront", "rightFront");
     }
 
     @Override

@@ -8,14 +8,17 @@ import org.firstinspires.ftc.teamcode.TeleOpConfig;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.ClawSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.LauncherSubsystem;
 
+import java.util.concurrent.TimeUnit;
+
 public class LauncherCommand extends CommandBase {
     private LauncherSubsystem launchSubsystem;
     private boolean clawOpen;
 
+
     public LauncherCommand(LauncherSubsystem launchSubsystem) {
         this.launchSubsystem = launchSubsystem;
-        launchSubsystem.hold();
-        clawOpen = false;
+        //launchSubsystem.hold();
+        //clawOpen = false;
         addRequirements(launchSubsystem);
     }
 
@@ -23,10 +26,15 @@ public class LauncherCommand extends CommandBase {
     public void initialize() {
         if (clawOpen) {
             launchSubsystem.hold();
+            clawOpen = !clawOpen;
         } else {
             launchSubsystem.fire();
+
         }
         clawOpen = !clawOpen;
+
+
+
     }
 
 
