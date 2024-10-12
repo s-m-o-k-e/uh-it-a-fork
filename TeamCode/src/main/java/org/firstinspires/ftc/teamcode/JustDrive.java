@@ -21,7 +21,10 @@ import org.firstinspires.ftc.teamcode.teleop.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.LauncherSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.subsystems.SlideSubsystem;
-
+import java.util.function.Supplier;
+import java.util.Vector;
+import java.util.Map;
+import java.util.HashMap;
 @TeleOp(name="Just Drive TeleOp", group = "Apex Robotics 3916")
 public class JustDrive extends CommandOpMode {
 
@@ -37,11 +40,53 @@ public class JustDrive extends CommandOpMode {
     private SimpleSlide up;
     private SimpleSlide down;
     private SimpleSlide stop;
+
+    private Map<String, Supplier<Boolean>> buttonmap = new HashMap<>();
+    private Map<String, Supplier<Double>> analogmap = new HashMap<>();
+
+
+
+
+
+
+
     @Override
     public void initialize() {
+
+
+
+        //init hardware codes
+
+
+
         driver = new GamepadEx(gamepad1);
         codriver = new GamepadEx(gamepad2);
         //normal config
+
+
+        try {
+            buttonmap.put("LB", () -> driver.getButton(GamepadKeys.Button.LEFT_BUMPER));
+            buttonmap.put("RB", () -> driver.getButton(GamepadKeys.Button.RIGHT_BUMPER));
+            buttonmap.put("A", () -> driver.getButton(GamepadKeys.Button.A));
+            buttonmap.put("B", () -> driver.getButton(GamepadKeys.Button.B));
+            buttonmap.put("X", () -> driver.getButton(GamepadKeys.Button.X));
+            buttonmap.put("Y", () -> driver.getButton(GamepadKeys.Button.Y));
+            buttonmap.put("START", () -> driver.getButton(GamepadKeys.Button.START));
+            buttonmap.put("BACK", () -> driver.getButton(GamepadKeys.Button.BACK));
+            buttonmap.put("DU", () -> driver.getButton(GamepadKeys.Button.DPAD_UP));
+            buttonmap.put("DD", () -> driver.getButton(GamepadKeys.Button.DPAD_DOWN));
+            buttonmap.put("DL", () -> driver.getButton(GamepadKeys.Button.DPAD_LEFT));
+            buttonmap.put("DR", () -> driver.getButton(GamepadKeys.Button.DPAD_RIGHT));
+
+            analogmap.put("LT", () -> driver.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
+            analogmap.put("RT", () -> driver.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER));
+            analogmap.put("lx", () -> driver.getLeftX());
+            analogmap.put("ly", () -> driver.getLeftY());
+            analogmap.put("rx", () -> driver.getRightX());
+            analogmap.put("ry", () -> driver.getRightY());
+        } catch (Exception e) {
+            //litterally here just so i can collapse this giant box of text
+        }
 
         drive = new DriveSubsystem(hardwareMap, "leftBack", "rightBack", "leftFront", "rightFront");
         //switch right motors if it doesn't work
